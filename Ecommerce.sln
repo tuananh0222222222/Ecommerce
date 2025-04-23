@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{02EA681E-C7D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ecommerce.API", "src\ecommerce.API\ecommerce.API.csproj", "{06A43B2C-D7F2-4659-89B2-B0B5A7007504}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ecommerce.persistent", "src\ecommerce.persistent\ecommerce.persistent.csproj", "{636BD4B8-3E0D-48DB-8AAD-C3D599FC8CCB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ecommerce.persistence", "src\ecommerce.persistent\ecommerce.persistence.csproj", "{636BD4B8-3E0D-48DB-8AAD-C3D599FC8CCB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ecommerce.infrastructure", "src\ecommerce.infrastructure\ecommerce.infrastructure.csproj", "{A2A4E12D-E48C-4B88-B758-E718C45659EB}"
 EndProject

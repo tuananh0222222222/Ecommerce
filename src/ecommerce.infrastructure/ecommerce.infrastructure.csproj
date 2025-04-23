@@ -6,9 +6,18 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+	<ItemGroup>
+		<PackageReference Include="Serilog.AspNetCore" Version="8.0.3" />
+		<PackageReference Include="Serilog.Sinks.Seq" Version="9.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.2" />
+		<PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="8.0.15" />
+		<PackageReference Include="StackExchange.Redis" Version="2.8.31" />
+	</ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ecommerce.application\ecommerce.application.csproj" />
     <ProjectReference Include="..\ecommerce.domain\ecommerce.domain.csproj" />
+    <ProjectReference Include="..\ecommerce.persistent\ecommerce.persistence.csproj" />
   </ItemGroup>
 
 </Project>
