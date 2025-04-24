@@ -1,6 +1,23 @@
-﻿@{
-    ViewData["Title"] = "Privacy Policy";
-}
-<h1>@ViewData["Title"]</h1>
+﻿<h2>Sản phẩm</h2>
+<button id="loadBtn">Tải sản phẩm</button>
+<ul id="productList"></ul>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $("#loadBtn").click(function () {
+      $.ajax({
+        url: "http://4.200.9.115:8088/api/product/",
+        method: "GET",
+        success: function (data) {
+          $("#productList").empty();
+          data.forEach(product => {
+            $("#productList").append(`<li>${product.name} - ${product.price}</li>`);
+          });
+        },
+        error: function (err) {
+          alert("Lỗi khi tải dữ liệu.");
+          console.error(err);
+        }
+      });
+    });
+</script>

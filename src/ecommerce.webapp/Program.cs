@@ -1,8 +1,17 @@
+using ecommerce.webapp.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddHttpClient("MyApiClient", client =>
+{
+    client.BaseAddress = new Uri("http://4.200.9.115:8088/");
+    client.Timeout = TimeSpan.FromSeconds(30);
+    client.DefaultRequestHeaders.Add("Accept", "application/json");
+});
 
+builder.Services.AddScoped<IProductService, ProductService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -13,9 +22,9 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+app.UseStatusCodePagesWithRedirects("/Home/Error/{0}");
 app.UseRouting();
 
 app.UseAuthorization();
