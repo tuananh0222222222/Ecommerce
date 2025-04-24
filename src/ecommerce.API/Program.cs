@@ -15,9 +15,9 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowHttp", cors =>
     {
-        cors.AllowAnyOrigin()
-        .AllowAnyMethod()
-        .AllowAnyHeader();
+        cors.AllowAnyHeader();
+        cors.AllowAnyMethod();
+        cors.AllowAnyOrigin();
     });
 });
 
@@ -44,7 +44,6 @@ if (app.Environment.IsProduction()
 app.UseSerilogRequestLogging();
 app.UseHttpsRedirection();
 
-app.UseCors("AllowHttp");
 app.UseAuthorization();
 
 app.MapControllers();

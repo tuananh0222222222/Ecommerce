@@ -11,6 +11,7 @@ builder.Services.AddHttpClient("MyApiClient", client =>
     client.DefaultRequestHeaders.Add("Accept", "application/json");
 });
 
+builder.Services.AddSignalR();
 builder.Services.AddScoped<IProductService, ProductService>();
 var app = builder.Build();
 
@@ -26,8 +27,10 @@ if (!app.Environment.IsDevelopment())
 app.UseStaticFiles();
 app.UseStatusCodePagesWithRedirects("/Home/Error/{0}");
 app.UseRouting();
-
 app.UseAuthorization();
+
+
+
 
 app.MapControllerRoute(
     name: "default",
