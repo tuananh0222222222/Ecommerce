@@ -4,8 +4,6 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
-
 builder.Host.UseSerilog();
 // Add services to the container.
 
@@ -22,21 +20,24 @@ SerilogLogger.ConfigureLogger(builder.Configuration);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment()
+    )
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+if (app.Environment.IsProduction()
+    )
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 app.UseSerilogRequestLogging();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
 app.MapControllers();
-
-
-
 
 try
 {
@@ -45,7 +46,6 @@ try
 }
 catch (Exception e)
 {
-
     Log.Fatal(e, "Application terminated unexpectedly");
     await app.StopAsync();
 }

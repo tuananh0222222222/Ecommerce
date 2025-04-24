@@ -83,16 +83,15 @@ namespace ecommerce.API.Controllers
                     return BadRequest(ModelState);
                 }
 
-                var product = new Product(
-                    id: id,
-                    name: request.Name,
-                    description: request.Description,
-                    price: request.Price,
-                    stockQuantity: request.StockQuantity,
-                    category: request.Category
-                );
+                var existProduct = await _productService.GetByIdAsync(id);
+                if (existProduct == null)
+                {
+                    Log.Warning("Product {ProductId} not found for update", id);
+                    return NotFound(); // Trả về 404 nếu không tìm thấy sản phẩm
+                }
 
-                await _productService.UpdateAsync(product);
+                var updatedProduct = new Product(id, request.Name, request.Description, request.Price, request.StockQuantity, request.Category);
+                await _productService.UpdateAsync(updatedProduct);
                 Log.Information("Product updated: {ProductId}", id); // Log khi cập nhật sản phẩm
                 return NoContent(); // 204 No Content là chuẩn cho PUT thành công
             }

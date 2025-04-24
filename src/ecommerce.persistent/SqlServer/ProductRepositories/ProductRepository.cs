@@ -1,6 +1,5 @@
 ﻿using ecommerce.domain.Entities;
 using ecommerce.domain.Interface;
-using ecommerce.persistence.SqlServer;
 using Microsoft.EntityFrameworkCore;
 
 namespace ecommerce.persistence.SqlServer.Repositories
@@ -16,8 +15,12 @@ namespace ecommerce.persistence.SqlServer.Repositories
 
         public async Task AddAsync(Product product)
         {
-            await _dbContext.Products.AddAsync(product);
-            await _dbContext.SaveChangesAsync();
+            var existName = await _dbContext.Products.FirstOrDefaultAsync(p => p.Name == product.Name);
+            if (existName == null) {
+                await _dbContext.Products.AddAsync(product);
+                await _dbContext.SaveChangesAsync();
+            }
+            
         }
 
         public async Task DeleteAsync(Guid id)

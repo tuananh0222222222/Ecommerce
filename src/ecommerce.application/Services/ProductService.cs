@@ -33,8 +33,8 @@ namespace ecommerce.application.Services
 
             if (product != null)
             {
-                var serializedProduct = JsonSerializer.Serialize(product);
-                await _cache.SetAsync(cacheKey, serializedProduct, TimeSpan.FromMinutes(5));
+                //  var serializedProduct = JsonSerializer.Serialize(product);
+                await _cache.SetAsync(cacheKey, product, TimeSpan.FromMinutes(5));
                 Log.Information("Product {ProductId} retrieved from database and cached", id);
             }
 

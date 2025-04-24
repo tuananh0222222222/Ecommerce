@@ -10,7 +10,7 @@
         public string Category { get; private set; }         // Danh mục
         public DateTime CreatedAt { get; private set; }      // Ngày tạo
         public DateTime UpdatedAt { get; private set; }      // Ngày cập nhật
-
+        public Product() { }
         public Product(Guid id, string name, string description, decimal price, int stockQuantity, string category)
         {
             Id = id;
@@ -39,7 +39,7 @@
         public void IncreaseStock(int quantity)
         {
 
-           
+
             StockQuantity += quantity;
             UpdatedAt = DateTime.UtcNow;
         }

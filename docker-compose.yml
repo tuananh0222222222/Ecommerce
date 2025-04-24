@@ -1,0 +1,77 @@
+version: '3.8'
+
+services:
+  api:
+    container_name: ecommerce-api-container
+    build:
+      context: .
+      dockerfile: src/ecommerce.API/Dockerfile
+    restart: always
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTPS_PORTS=8081
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_URLS=http://+:8080
+      # - ConnectionStrings__DefaultConnection=Server=mssql,1433;Database=ecommerceDb;User=sa;Password=yourStrong!Passw0rd;
+      # - ConnectionStrings__Redis=redis:6379,abortConnect=false
+    networks:
+      - ecommerce_network
+    depends_on:
+      - redis
+      - seq
+      - mssql # MSSQL cần phải sẵn sàng trước khi API bắt đầu
+    command: /bin/bash -c "wait-for-it mssql:1433 -- dotnet ecommerce.API.dll" # Đợi MSSQL sẵn sàng
+
+  seq:  
+    container_name: seq-container
+    image: datalust/seq:latest
+    restart: always
+    environment:
+      - SEQ_FACILITY=web
+      - SEQ_USER=admin
+      - SEQ_PASSWORD=admin123
+      - ACCEPT_EULA=Y
+    ports:
+      - "5341:5341"
+      - "8000:80"
+    networks:
+      - ecommerce_network
+    volumes:
+      - seq_data:/data
+
+  redis:
+    container_name: redis-container
+    restart: always
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - ecommerce_network
+  mssql:
+    container_name: mssql
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    restart: always
+    environment:
+      - ACCEPT_EULA=y
+      - SA_PASSWORD=yourStrong!Passw0rd
+    ports:
+      - "1433:1433"
+    volumes:
+      - mssql_data:/var/opt/mssql
+    networks:
+      - ecommerce_network
+
+volumes:
+  seq_data:
+  redis_data:
+  mssql_data:
+
+
+networks:
+  ecommerce_network:
+    driver: bridge

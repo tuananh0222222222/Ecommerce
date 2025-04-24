@@ -18,7 +18,12 @@ namespace ecommerce.infrastructure.DependencyInjection
             //add connect sql
             services.AddDbContext<AppDbContext>(options =>
             {
-                options.UseSqlServer(configuration.GetConnectionString("MSSQLConnection"));
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"), sqlOption =>
+                {
+                    sqlOption.EnableRetryOnFailure(
+                        maxRetryCount: 5, maxRetryDelay: TimeSpan.FromSeconds(10), errorNumbersToAdd: null
+                        );
+                });
             });
 
 

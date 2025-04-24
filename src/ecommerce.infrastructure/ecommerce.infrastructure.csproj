@@ -7,6 +7,7 @@
   </PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="Serilog.AspNetCore" Version="8.0.3" />
 		<PackageReference Include="Serilog.Sinks.Seq" Version="9.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
@@ -18,6 +19,9 @@
     <ProjectReference Include="..\ecommerce.application\ecommerce.application.csproj" />
     <ProjectReference Include="..\ecommerce.domain\ecommerce.domain.csproj" />
     <ProjectReference Include="..\ecommerce.persistent\ecommerce.persistence.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SendMail\" />
   </ItemGroup>
 
 </Project>

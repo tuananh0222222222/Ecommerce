@@ -1,6 +1,8 @@
 ﻿using ecommerce.application.Interfaces;
 using Microsoft.Extensions.Caching.Distributed;
-using System.Text.Json;
+using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
+
 
 namespace ecommerce.infrastructure.Redis
 {
@@ -16,7 +18,10 @@ namespace ecommerce.infrastructure.Redis
         public async Task<T?> GetAsync<T>(string key)
         {
             var value = await _cache.GetStringAsync(key);
-            return value == null ? default : JsonSerializer.Deserialize<T>(value);
+            if (value.IsNullOrEmpty())
+                return default;
+
+            return JsonConvert.DeserializeObject<T>(value);
         }
 
         public async Task RemoveAsync(string key)
@@ -30,7 +35,7 @@ namespace ecommerce.infrastructure.Redis
             {
                 AbsoluteExpirationRelativeToNow = expiry ?? TimeSpan.FromMinutes(5)
             };
-            await _cache.SetStringAsync(key, JsonSerializer.Serialize(value), options);
+            await _cache.SetStringAsync(key, JsonConvert.SerializeObject(value), options);
 
 
         }
