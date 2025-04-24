@@ -8,13 +8,13 @@ services:
       dockerfile: src/ecommerce.API/Dockerfile
     restart: always
     ports:
-      - "8080:8080"
-      - "8081:8081"
+      - "8088:80"
+      - "8089:443"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_HTTPS_PORTS=8081
-      - ASPNETCORE_HTTP_PORTS=8080
-      - ASPNETCORE_URLS=http://+:8080
+      - ASPNETCORE_HTTPS_PORTS=80
+      - ASPNETCORE_HTTP_PORTS=443
+      - ASPNETCORE_URLS=http://+:80
       # - ConnectionStrings__DefaultConnection=Server=mssql,1433;Database=ecommerceDb;User=sa;Password=yourStrong!Passw0rd;
       # - ConnectionStrings__Redis=redis:6379,abortConnect=false
     networks:
